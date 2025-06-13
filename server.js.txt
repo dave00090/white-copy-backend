@@ -1,0 +1,22 @@
+const express = require('express');
+const cors = require('cors');
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+let clients = [];
+
+app.get('/clients', (req, res) => {
+  res.json(clients);
+});
+
+app.post('/clients', (req, res) => {
+  const newClient = req.body;
+  clients.push(newClient);
+  res.json(newClient);
+});
+
+app.listen(3001, () => {
+  console.log('White Copy backend running at http://localhost:3001');
+});

@@ -1,0 +1,26 @@
+// This is a simple backend using Express.js for White Copy Enterprises
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3001;
+
+app.use(cors());
+app.use(bodyParser.json());
+
+let clients = [];
+
+app.get('/clients', (req, res) => {
+  res.json(clients);
+});
+
+app.post('/clients', (req, res) => {
+  const client = req.body;
+  client.owed = Number(client.invoice) - Number(client.paid);
+  clients.push(client);
+  res.status(201).json(client);
+});
+
+app.listen(port, () => {
+  console.log(`White Copy backend running at http://localhost:${port}`);
+});
